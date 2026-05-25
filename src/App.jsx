@@ -141,6 +141,34 @@ function App() {
     };
   }, [loading]);
 
+  // 3. Intersection Observer to trigger scroll-triggered animations
+  useEffect(() => {
+    if (loading) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          } else {
+            entry.target.classList.remove('visible');
+          }
+        });
+      },
+      {
+        threshold: 0.12, // trigger when 12% of the section is visible
+        rootMargin: '0px 0px -10% 0px' // slightly offset trigger point for natural entry
+      }
+    );
+
+    const sections = document.querySelectorAll('.story-section');
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+    };
+  }, [loading]);
+
   return (
     <>
       {/* 3D Preloader Overlay */}
