@@ -77,13 +77,8 @@ function App() {
     const imgWidth = img.width;
     const imgHeight = img.height;
 
-    // Scale ratio
-    let ratio = Math.max(canvasWidth / imgWidth, canvasHeight / imgHeight);
-    
-    // Force image to maintain landscape aspect ratio (fit width) on mobile screens
-    if (window.innerWidth <= 768) {
-      ratio = canvasWidth / imgWidth;
-    }
+    // Scale ratio (act like object-fit: contain to fit image onto screen)
+    let ratio = Math.min(canvasWidth / imgWidth, canvasHeight / imgHeight);
 
     const newWidth = imgWidth * ratio;
     const newHeight = imgHeight * ratio;
