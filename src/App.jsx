@@ -5,6 +5,9 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
 
+  // Mobile menu state
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   // Canvas refs
   const canvasRef = useRef(null);
   const imagesRef = useRef([]);
@@ -74,8 +77,14 @@ function App() {
     const imgWidth = img.width;
     const imgHeight = img.height;
 
-    // Cover scale ratio
-    const ratio = Math.max(canvasWidth / imgWidth, canvasHeight / imgHeight);
+    // Scale ratio
+    let ratio = Math.max(canvasWidth / imgWidth, canvasHeight / imgHeight);
+    
+    // Force image to maintain landscape aspect ratio (fit width) on mobile screens
+    if (window.innerWidth <= 768) {
+      ratio = canvasWidth / imgWidth;
+    }
+
     const newWidth = imgWidth * ratio;
     const newHeight = imgHeight * ratio;
 
@@ -160,17 +169,28 @@ function App() {
       {/* Header / Navbar */}
       <header className="navbar">
         <div className="container navbar-container">
-          <a href="#hero" className="brand-logo">
+          <a href="#hero" className="brand-logo" onClick={() => setIsMenuOpen(false)}>
             VELOCITY<span className="brand-dot"></span>
           </a>
-          <nav>
+
+          {/* Hamburger Menu Icon */}
+          <div 
+            className={`hamburger ${isMenuOpen ? 'open' : ''}`} 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
             <ul className="nav-links">
-              <li><a href="#design" className="nav-link">Chassis</a></li>
-              <li><a href="#aero" className="nav-link">Aero</a></li>
-              <li><a href="#drivetrain" className="nav-link">Power</a></li>
-              <li><a href="#speed" className="nav-link">Performance</a></li>
-              <li><a href="#cockpit" className="nav-link">Cockpit</a></li>
-              <li><a href="#reserve" className="nav-link">Reserve</a></li>
+              <li><a href="#design" className="nav-link" onClick={() => setIsMenuOpen(false)}>Chassis</a></li>
+              <li><a href="#aero" className="nav-link" onClick={() => setIsMenuOpen(false)}>Aero</a></li>
+              <li><a href="#drivetrain" className="nav-link" onClick={() => setIsMenuOpen(false)}>Power</a></li>
+              <li><a href="#speed" className="nav-link" onClick={() => setIsMenuOpen(false)}>Performance</a></li>
+              <li><a href="#cockpit" className="nav-link" onClick={() => setIsMenuOpen(false)}>Cockpit</a></li>
+              <li><a href="#reserve" className="nav-link" onClick={() => setIsMenuOpen(false)}>Reserve</a></li>
             </ul>
           </nav>
         </div>

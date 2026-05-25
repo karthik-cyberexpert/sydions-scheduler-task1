@@ -354,3 +354,67 @@ h1, h2, h3, h4, .brand-logo, .story-tagline, .story-link {
   max-width: 1200px;
   margin: 0 auto;
 }
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.hamburger span {
+  width: 30px;
+  height: 2px;
+  background-color: #fff;
+  transition: var(--transition-smooth);
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+    background-color: var(--color-accent-primary);
+  }
+
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+    background-color: var(--color-accent-primary);
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(4, 4, 6, 0.98);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition-smooth);
+    z-index: 999;
+  }
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .nav-link {
+    font-size: 1.5rem;
+  }
+}
